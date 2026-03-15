@@ -83,8 +83,6 @@ struct testing: View {
                                 } // end HStack
                                 .padding(.vertical,2)
                                 .padding(.horizontal,2)
-                                .frame(width: UIScreen.main.bounds.width )
-
                             } // End ScrollView
                             .frame(maxWidth: .infinity)
 

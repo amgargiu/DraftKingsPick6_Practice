@@ -156,14 +156,13 @@
 			path = PlayerCardViews;
 			sourceTree = "<group>";
 		};
-		731D70F42F65055D0030E90D /* Core */ = {
+		731D70F42F65055D0030E90D /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				731D70F72F65097A0030E90D /* Components */,
 				73A0B6FE2F5E78C5007D8B33 /* Views */,
 				73A0B6FD2F5E78BC007D8B33 /* ViewModels */,
 			);
-			path = Core;
+			path = Other;
 			sourceTree = "<group>";
 		};
 		731D70F72F65097A0030E90D /* Components */ = {
@@ -219,8 +218,9 @@
 		73A0B6F02F5E75C1007D8B33 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				731D70F72F65097A0030E90D /* Components */,
+				731D70F42F65055D0030E90D /* Other */,
 				731994612F67756C0098C856 /* HomeView */,
-				731D70F42F65055D0030E90D /* Core */,
 			);
 			path = Core;
 			sourceTree = "<group>";

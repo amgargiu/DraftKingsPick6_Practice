@@ -38,5 +38,14 @@ class DevPreview {
         injuryStatus: "Available"
     )
     
+    static let game = GameModel(
+            id: "1",
+            homeTeam: "Heat",
+            homeTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
+            awayTeam: "Magic",
+            awayTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
+            weekday: "WED", time: "7:30 PM"
+        )
+    
     
 }

@@ -10,7 +10,7 @@ import Combine
 
 class PlayersViewModel: ObservableObject {
     
-    @Published var allPlayer: [PlayerModel] = []
+    @Published var allPlayers: [PlayerModel] = []
     let playerService = PlayersDataService()
     var cancellables: Set<AnyCancellable> = []
 
@@ -23,7 +23,7 @@ class PlayersViewModel: ObservableObject {
     func addSub() {
         playerService.$players
             .sink(receiveValue: { [weak self] players in
-                self?.allPlayer = players
+                self?.allPlayers = players
             })
             .store(in: &cancellables)
     }

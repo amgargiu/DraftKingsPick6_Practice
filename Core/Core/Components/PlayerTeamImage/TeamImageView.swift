@@ -1,5 +1,5 @@
 //
-//  PlayerImageView.swift
+//  TeamImageView.swift
 //  DraftKingsPick6_Practice
 //
 //  Created by Antonio Gargiulo on 3/9/26.
@@ -7,23 +7,23 @@
 
 import SwiftUI
 
-struct PlayerImageView: View {
-    
+struct TeamImageView: View {
     let player: PlayerModel
-    @StateObject var vm : PlayerImageViewModel
+    
+    @StateObject var vm : TeamImageViewModel
     
     init(player: PlayerModel) {
         self.player = player
-        _vm = StateObject(wrappedValue: PlayerImageViewModel(player: player))
+        _vm = StateObject(wrappedValue: TeamImageViewModel(player: player))
     }
     
     var body: some View {
         
         ZStack {
-            if let image = vm.playerImage {
+            if let image = vm.teamImage {
                 Image(uiImage: image)
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit()
             } else {
                 ProgressView()
             }
@@ -34,5 +34,5 @@ struct PlayerImageView: View {
 }
 
 #Preview {
-    PlayerImageView(player: DevPreview.player)
+    TeamImageView(player: DevPreview.player)
 }

@@ -15,12 +15,10 @@ struct AllPlayersView: View {
         
         
             List {
-                ForEach(vm.allPlayer) { player in
+                ForEach(vm.allPlayers) { player in
                     LazyVStack(spacing: 20) {
-//                        PlayerImageView(player: player)
-//                        Text(player.player ?? "")
-                        test(player: player)
-
+                        PlayerImageView(player: player)
+                        Text(player.player ?? "")
                     }
                     .background(
                         TeamImageView(player: player)

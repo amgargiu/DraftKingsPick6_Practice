@@ -16,11 +16,11 @@ struct PlayerModel: Identifiable, Codable, Hashable {
     
     let MIN, FGM, FGA, FTM, FTA, threePM, REB, AST, STL, BLK, TO, PTS: Double?
     
+    let last5Min, last5FGM, last5FGA, last5FTM, last5FTA, last5ThreePM, last5REB, last5AST, last5STL, last5BLK, last5TO, last5PTS: Double?
+    
     let pctRostered: Double?
     let fantasyPtsTotal: Int?
-    
     let fantasyPtsAvg: Double?
-    
     let injuryStatus: String?
     
     enum CodingKeys: String, CodingKey {
@@ -28,6 +28,18 @@ struct PlayerModel: Identifiable, Codable, Hashable {
         case MIN, FGM, FGA, FTM, FTA, REB, AST, STL, BLK, TO, PTS
         case pctRostered, fantasyPtsTotal, fantasyPtsAvg, injuryStatus
         case threePM = "3PM"
+        case last5Min = "last5_MIN"
+        case last5FGM = "last5_FGM"
+        case last5FGA = "last5_FGA"
+        case last5FTM = "last5_FTM"
+        case last5FTA = "last5_FTA"
+        case last5ThreePM = "last5_3PM"
+        case last5REB = "last5_REB"
+        case last5AST = "last5_AST"
+        case last5STL = "last5_STL"
+        case last5BLK = "last5_BLK"
+        case last5TO = "last5_TO"
+        case last5PTS = "last5_PTS"
     }
 }
 

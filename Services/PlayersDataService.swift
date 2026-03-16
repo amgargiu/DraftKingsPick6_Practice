@@ -16,7 +16,7 @@ class PlayersDataService {
     
     
     init() {
-        downloadPlayers()
+        downloadPlayers2()
     }
     
     
@@ -35,6 +35,30 @@ class PlayersDataService {
                 self?.players = playersData
             })
             .store(in: &cancellables)
+    }
+    
+    func downloadPlayers2() {
+        // 1. Find the file inside the app bundle
+        guard let url = Bundle.main.url(forResource: "players", withExtension: "json") else {
+            print("Could not find players.json in bundle")
+            return
+        }
+        
+        // 2. Load the raw data from that file
+        guard let data = try? Data(contentsOf: url) else {
+            print("Could not load data from players.json")
+            return
+        }
+        
+        // 3. Decode it exactly like before
+        guard let decodedPlayers = try? JSONDecoder().decode([PlayerModel].self, from: data) else {
+            print("Could not decode players.json")
+            return
+        }
+        
+        // 4. Set it
+        self.players = decodedPlayers
+        print("Players loaded locally:", decodedPlayers.count)
     }
     
 }

@@ -21,7 +21,7 @@ struct AllPlayersView: View {
                         Text(player.player ?? "")
                     }
                     .background(
-                        TeamImageView(player: player)
+                        PlayerTeamImageView(player: player)
                     )
 
                 }

@@ -22,7 +22,7 @@ struct PlayerTileView: View {
                 // MASSIVE BACKGROUND LOGO
                 Color.clear
                     .overlay(alignment: .topTrailing, content: {
-                        TeamImageView(player: player)
+                        PlayerTeamImageView(player: player)
                                 .scaledToFit()
                                 .frame(width: 220) // Make it big
                                 .opacity(0.15)
@@ -57,7 +57,7 @@ struct PlayerTileView: View {
                     
                     VStack(spacing: 2) {
                         HStack(spacing: 4) {
-                            TeamImageView(player: player)
+                            PlayerTeamImageView(player: player)
                                 .frame(width: 16, height: 16)
                             
                             Text(abbreviatedName)

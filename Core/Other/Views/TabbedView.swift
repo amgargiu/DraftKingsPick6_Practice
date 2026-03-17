@@ -37,7 +37,7 @@ struct TabbedView: View {
                 .clipped()
                 .tag(2)
             
-            TeamImageView(player: DevPreview.player)
+            PlayerTeamImageView(player: DevPreview.player)
                 .clipped()
                 .tag(3)
             

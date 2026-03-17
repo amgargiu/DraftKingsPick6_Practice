@@ -13,6 +13,7 @@ class DevPreview {
     
     
     static let player = PlayerModel(
+        id: 1,
         player: "Victor Wembanyama",
         image: "https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/5104157.png&w=350",
         team: "SAS",

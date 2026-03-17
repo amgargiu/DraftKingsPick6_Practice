@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct TeamImageView: View {
+struct PlayerTeamImageView: View {
     let player: PlayerModel
     
-    @StateObject var vm : TeamImageViewModel
+    @StateObject var vm : PlayerTeamImageViewModel
     
     init(player: PlayerModel) {
         self.player = player
-        _vm = StateObject(wrappedValue: TeamImageViewModel(player: player))
+        _vm = StateObject(wrappedValue: PlayerTeamImageViewModel(player: player))
     }
     
     var body: some View {
@@ -34,5 +34,5 @@ struct TeamImageView: View {
 }
 
 #Preview {
-    TeamImageView(player: DevPreview.player)
+    PlayerTeamImageView(player: DevPreview.player)
 }

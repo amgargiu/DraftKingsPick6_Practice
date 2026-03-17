@@ -23,7 +23,7 @@ struct PlayerCardView: View {
 
                 Color.clear
                     .overlay(
-                        TeamImageView(player: player)
+                        PlayerTeamImageView(player: player)
                             .scaledToFit()
                             .frame(width: 200, height: 200) // Scaled for grid width
                             .opacity(0.12)
@@ -40,7 +40,7 @@ struct PlayerCardView: View {
                             .frame(minHeight: 80, maxHeight: 160) // Adaptive height
                             .padding(.vertical, -4)
                         HStack {
-                            TeamImageView(player: player)
+                            PlayerTeamImageView(player: player)
                                 .frame(width: 20, height: 20)
                             Text(player.abbrevName)
                                 .font(.system(size: 14, weight: .bold)) // Adaptive size

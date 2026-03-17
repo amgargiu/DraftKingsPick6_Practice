@@ -1,5 +1,5 @@
 //
-//  PlayerImagesDataService.swift
+//  TeamImagesDataService.swift
 //  DraftKingsPick6_Practice
 //
 //  Created by Antonio Gargiulo on 3/8/26.
@@ -10,20 +10,19 @@ import SwiftUI
 import Combine
 
 
-class PlayerImagesDataService {
+class PlayerTeamImagesDataService {
     
-    @Published var playerImage: UIImage?
+    @Published var playerTeamImage: UIImage?
     let player : PlayerModel
     var cancellables: Set<AnyCancellable> = []
     
     let cacheManager = CacheManager.instance
     let imageCacheKey: String
 
-
     
     init(player: PlayerModel) {
         self.player = player
-        self.imageCacheKey = player.displayName ?? "unkown"
+        self.imageCacheKey = player.team ?? "unkown"
         getImage()
     }
     
@@ -31,17 +30,17 @@ class PlayerImagesDataService {
     func getImage() {
         // eventually will check FM or Cache first then call download
         if let image = cacheManager.get(key: imageCacheKey) {
-            self.playerImage = image
-            print("got player image from cache")
+            self.playerTeamImage = image
+            print("got player team image from cache")
         } else {
             downloadImage()
-            print("downloading player image")
+            print("downloading player team image")
         }
     }
     
     func downloadImage() {
         
-        guard let urlString = player.image else { return }
+        guard let urlString = player.teamImage else { return }
         guard let url = URL(string: urlString) else { return }
         
         
@@ -60,9 +59,9 @@ class PlayerImagesDataService {
             .sink(receiveCompletion: NetworkingManager.handleSinkCompletion, receiveValue: { [weak self] receivedImageData in
                 guard let receivedImageData = receivedImageData else { return }
                 guard let imageCacheKey = self?.imageCacheKey else { return }
-                self?.playerImage = receivedImageData
+                self?.playerTeamImage = receivedImageData
                 self?.cacheManager.add(key: imageCacheKey, image: receivedImageData) // adding to cache
-                print("added player image to cache")
+                print("added player team image to cache")
             })
             .store(in: &cancellables)
     }

@@ -11,7 +11,7 @@ import SwiftUI
 struct DraftKingsPick6_PracticeApp: App {
     var body: some Scene {
         WindowGroup {
-            AllPlayersView()
+            HomeView()
         }
     }
 }

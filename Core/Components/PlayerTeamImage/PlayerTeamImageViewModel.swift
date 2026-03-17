@@ -9,24 +9,24 @@ import Foundation
 import SwiftUI
 import Combine
 
-class TeamImageViewModel: ObservableObject {
+class PlayerTeamImageViewModel: ObservableObject {
     
     @Published var teamImage: UIImage?
     
-    let teamImageService : TeamImagesDataService
+    let teamImageService : PlayerTeamImagesDataService
     let player : PlayerModel
     var cancellables: Set<AnyCancellable> = []
 
     
     init(player: PlayerModel) {
         self.player = player
-        teamImageService = TeamImagesDataService(player: player)
+        teamImageService = PlayerTeamImagesDataService(player: player)
         addSub()
     }
     
     
     func addSub() {
-        teamImageService.$teamImage
+        teamImageService.$playerTeamImage
             .sink { [weak self] imageData in
                 self?.teamImage = imageData
             }

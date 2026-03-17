@@ -9,7 +9,8 @@ import SwiftUI
 
 struct PlayerCircleView: View {
     
-    let playerImageURL: String // We'll pass the URL from PlayerModel later
+    // Essentially need player not just URL
+    let player: PlayerModel
     
     var body: some View {
         ZStack {
@@ -18,7 +19,7 @@ struct PlayerCircleView: View {
                 .fill(Color.orange)
             
             // 2. THE PLAYER IMAGE
-            AsyncImage(url: URL(string: playerImageURL)) { image in
+            AsyncImage(url: URL(string: player.image ?? "")) { image in
                 image
                     .resizable()
                     .scaledToFill() // Ensures it fills the circle
@@ -39,5 +40,5 @@ struct PlayerCircleView: View {
 }
 
 #Preview {
-    PlayerCircleView(playerImageURL: DevPreview.player.image ?? "")
+    PlayerCircleView(player: DevPreview.player)
 }

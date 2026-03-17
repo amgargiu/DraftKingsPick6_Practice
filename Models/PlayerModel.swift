@@ -10,7 +10,7 @@ import Foundation
 
 struct PlayerModel: Identifiable, Codable, Hashable {
     
-    let id: UUID = UUID()
+    let id: Int?
     
     let player, image, team, teamImage, position, opp, time: String?
     
@@ -24,6 +24,7 @@ struct PlayerModel: Identifiable, Codable, Hashable {
     let injuryStatus: String?
     
     enum CodingKeys: String, CodingKey {
+        case id
         case player, image, team, teamImage, position, opp, time
         case MIN, FGM, FGA, FTM, FTA, REB, AST, STL, BLK, TO, PTS
         case pctRostered, fantasyPtsTotal, fantasyPtsAvg, injuryStatus

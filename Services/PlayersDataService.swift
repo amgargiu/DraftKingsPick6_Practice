@@ -16,14 +16,14 @@ class PlayersDataService {
     
     
     init() {
-        downloadPlayers2()
+        downloadPlayers()
     }
     
     
     
     func downloadPlayers() {
         
-        guard let url = URL(string: "https://gist.githubusercontent.com/amgargiu/2d215fa3c719c2eb6952fd1e878d9810/raw/e2a7460674712044bbec8fcd2de5bb2ca80f00d4/players-2-21-26.json") else { return }
+        guard let url = URL(string: "https://raw.githubusercontent.com/amgargiu/DraftKingsPick6_Practice/data/players.json") else { return }
         
         NetworkingManager.download(url: url)
             .decode(type: [PlayerModel].self, decoder: JSONDecoder())

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject var vm = PlayersViewModel()
+    @StateObject var vm = PlayersViewModel() // not really needed here
     
     let columns: [GridItem] = [
         GridItem(.flexible()),
@@ -30,6 +30,13 @@ struct HomeView: View {
         "https://juzarraga.com/wp-content/uploads/2012/01/mcd_mcbites.jpg",
         "https://oohtoday.com/wp-content/uploads/2019/01/geico-tv-ad-lead-photo.png"
     ]
+    
+    // for Detail View
+    @State var selectedPlayerForDetails : PlayerModel? = nil
+    
+    //For Gird view and maybe even testing pick prevew view
+    @State private var selectedPicks: [PickModel] = []
+
     
     
     var body: some View {
@@ -82,22 +89,35 @@ struct HomeView: View {
                                 .padding(.top,5)
 
                             Divider()
-                                .frame(height: 2) // Give it some actual thickness
-                                .background(Color.gray) // This forces the color to show
-                            PlayerGridView(displayStat: $displayStat)
+                                .frame(height: 1) // Give it some actual thickness
+                                .background(Color.gray.opacity(0.3)) // This forces the color to show
+                                .offset(x: 0, y: -13)
+                            
+                            // 1. REMOVE THE PADDING FROM HERE
+                            PlayerGridView(selectedPicks: $selectedPicks,displayStat: $displayStat, selectedPlayerForDetails: $selectedPlayerForDetails)
+
+                            // 2. ADD THIS SPACER INSTEAD
+                            // This ensures there is always room to scroll past the grid
+                            // You can make this dynamic: selectedPicks.isEmpty ? 20 : 120
+                                    Spacer()
+                                        .frame(height: selectedPicks.count == 0 ? 120 : 150)
 
                         }
+
                     } // end ScrollView
                 } // end VStack
                 .overlay(alignment: .bottom, content: {
                     VStack(spacing: -45) { // Negative spacing allows the orange bar to "tuck" behind the tab bar
-                        testing()
+                        testingPicks(selectedPicks: $selectedPicks)
                                 .zIndex(0) // Lower layer
                             
                             BottomTabBarView(selectedTab: $selectedTab)
                                 .zIndex(1) // Higher layer (stays on top)
                         }
                         // This is the magic line: it tells the whole stack to drop into the bottom notch
+                })
+                .sheet(item: $selectedPlayerForDetails, content: { player in
+                    PlayerDetailView(player: player)
                 })
                 
             } // end ZStack

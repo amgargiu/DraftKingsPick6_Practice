@@ -16,8 +16,7 @@ enum SelectionDirection {
 
 struct PickModel: Identifiable, Equatable {
     // This ensures the "Pick" ID is the same as the "Player" ID
-    var id: String { player.id.uuidString }
-    
+    var id: UUID = UUID()
     let player: PlayerModel
     let statType: StatType
     let targetValue: Double

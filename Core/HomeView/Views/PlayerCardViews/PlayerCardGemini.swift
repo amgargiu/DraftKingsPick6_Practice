@@ -26,7 +26,7 @@ struct PlayerCardGemini: View {
             // without pushing the other content around.
             Color.clear
                 .overlay(alignment: .topTrailing) {
-                    TeamImageView(player: player)
+                    PlayerTeamImageView(player: player)
                         .scaledToFit()
                         .frame(width: 180) // Large logo
                         .opacity(0.12)     // Faded out
@@ -45,7 +45,7 @@ struct PlayerCardGemini: View {
                         .padding(.top, -10) // Pulls image slightly higher
                     
                     HStack(spacing: 6) {
-                        TeamImageView(player: player)
+                        PlayerTeamImageView(player: player)
                             .frame(width: 18, height: 18)
 
                         

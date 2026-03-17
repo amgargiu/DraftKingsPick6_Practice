@@ -1,23 +1,27 @@
 //
-//  testing.swift
+//  testing 2.swift
 //  DraftKingsPick6_Practice
 //
-//  Created by Antonio Gargiulo on 3/14/26.
+//  Created by Antonio Gargiulo on 3/16/26.
 //
+
 
 import SwiftUI
 
-struct testing: View {
+struct testingPicks: View {
     
     
     
     @State private var selectedCount: Int = 0
     // transtioning from above to players
     @StateObject var vm = PlayersViewModel()
-    @State private var selectedPlayers: [PlayerModel] = []
+    
+//    @State private var selectedPicks: [PickModel] = []
+    @Binding var selectedPicks: [PickModel]
+
     
     var currentMultiplier: String {
-        switch selectedPlayers.count {
+        switch selectedPicks.count {
         case 2: return "4.8x"
         case 3: return "9.6x"
         case 4: return "16x"
@@ -38,17 +42,17 @@ struct testing: View {
                     // THE HEADER LOGIC
                     headerView
                     // THE SLOTS LOGIC (Only shows if count > 0)
-                    if selectedPlayers.count > 0 {
+                    if selectedPicks.count > 0 {
                         HStack {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: -5) {
                                     
                                     ForEach(0..<8, id: \.self) { index in
                                         
-                                        if index < selectedPlayers.count {
+                                        if index < selectedPicks.count {
                                             // Filled Slot
-                                            let player = selectedPlayers[index] 
-                                            PlayerCircleView(playerImageURL: player.image ?? "")
+                                            let pick = selectedPicks[index]
+                                            PlayerCircleView(player: pick.player)
                                                         .frame(width: 44, height: 44)
 //                                            Circle()
 //                                                .stroke(style: StrokeStyle(lineWidth: 2))
@@ -58,17 +62,17 @@ struct testing: View {
 //                                                .shadow(color: .black.opacity(0.3), radius: 2)
 //                                                .overlay(Text("👤").font(.caption))
                                             
-                                        } else if index < (selectedPlayers.count + 1) || selectedPlayers.count >= 2 {
+                                        } else if index < (selectedPicks.count + 1) || selectedPicks.count >= 2 {
                                             // Dotted Slot (Show 1 extra if building, or ALL if valid)
                                             Circle()
                                                 .stroke(style: StrokeStyle(lineWidth: 1, dash: [3]))
                                                 .foregroundColor(.white.opacity(0.6))
                                                 .frame(width: 40, height: 40)
-                                                .background(Circle().fill(selectedPlayers.count == 1 ? Color.brown : Color.orange))
+                                                .background(Circle().fill(selectedPicks.count == 1 ? Color.brown : Color.orange))
                                                 .shadow(color: .black.opacity(0.3), radius: 2)
                                                 .overlay(
                                                     Group {
-                                                        if selectedPlayers.count == 1 {
+                                                        if selectedPicks.count == 1 {
                                                             Image(systemName: "plus").foregroundStyle(.white.opacity(0.6))
                                                         } else {
                                                             multiplierLabel(for: index)
@@ -93,7 +97,7 @@ struct testing: View {
                                 .frame(width: UIScreen.main.bounds.width*0.4, height: 20)
                                 .overlay(
                                     Group {
-                                        if selectedPlayers.count == 1 {
+                                        if selectedPicks.count == 1 {
                                             Text("MAKE 2+ PICKS")
                                                 .font(.system(size: 16, weight: .black))
                                                 .italic()
@@ -150,7 +154,7 @@ struct testing: View {
                     RoundedRectangle(cornerRadius: 25)
                             .fill(
                                 LinearGradient(
-                                    colors: selectedPlayers.count >= 2
+                                    colors: selectedPicks.count >= 2
                                         ? [Color(#colorLiteral(red: 0.8746507669, green: 0.5210690997, blue: 0.2556014708, alpha: 1)), Color(#colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1))] // Bright Orange
                                         : [Color(#colorLiteral(red: 0.3604600694, green: 0.2833285628, blue: 0.05178363906, alpha: 1)), Color(#colorLiteral(red: 0.3098039329, green: 0.2039215714, blue: 0.03921568766, alpha: 1))], // Dull Brown
                                     startPoint: .bottomLeading,
@@ -160,16 +164,21 @@ struct testing: View {
                 )
                 .onTapGesture {
                     withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                        if selectedPlayers.count < 8 {
+                        if selectedPicks.count < 8 {
                             // 1. Grab a random player from the VM data
                             if let randomPlayer = vm.allPlayers.randomElement() {
-                                
+                                let newPick = PickModel(
+                                    player: randomPlayer,
+                                    statType: .points,
+                                    targetValue: 0.0,
+                                    direction: .more
+                                )
                                 // 2. Add them to the array (this triggers the UI update)
-                                selectedPlayers.append(randomPlayer)
+                                selectedPicks.append(newPick)
                             }
                         } else {
                             // 3. Reset when we hit the max for testing purposes
-                            selectedPlayers.removeAll()
+                            selectedPicks.removeAll()
                         }
                     }
                 }
@@ -183,7 +192,7 @@ struct testing: View {
     
         var headerView: some View {
             HStack {
-                if selectedPlayers.count == 0 {
+                if selectedPicks.count == 0 {
                     HStack {
                         Image(systemName: "arrow.down")
                             .font(.system(size: 14, weight: .bold))
@@ -223,7 +232,7 @@ struct testing: View {
         @ViewBuilder
         func multiplierLabel(for index: some BinaryInteger) -> some View {
             // Only show multipliers (3x, 6x...) if valid (count >= 2)
-            if selectedPlayers.count >= 2 {
+            if selectedPicks.count >= 2 {
                 Text("\(index*3-1)x")
                     .font(.system(size: 8))
                     .foregroundColor(.white)
@@ -231,5 +240,5 @@ struct testing: View {
         }}
 
 #Preview {
-    testing()
+    testingPicks(selectedPicks: .constant([]))
 }

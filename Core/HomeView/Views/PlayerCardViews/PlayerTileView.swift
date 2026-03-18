@@ -98,18 +98,17 @@ struct PlayerTileView: View {
                         .foregroundColor(Color(white: 0.2))
                     
                     Spacer()
-
                     
                     VStack(spacing: -2) {
                         
                         Group {
                             switch displayStat {
                             case .points:
-                                Text("\(player.PTS ?? 0, specifier: "%.1f")")
+                                Text("\(player.ptsString)")
                             case .rebounds:
-                                Text("\(player.REB ?? 0, specifier: "%.1f")")
+                                Text("\(player.rebString)")
                             case .assists:
-                                Text("\(player.AST ?? 0, specifier: "%.1f")")
+                                Text("\(player.astString)")
                             }
                         }
                         .font(.system(size: 16, weight: .black))

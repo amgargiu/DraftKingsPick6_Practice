@@ -96,7 +96,9 @@ extension PlayerModel {
 
     // MARK: - Helper Private Formatter
     private func formatDouble(_ value: Double?) -> String {
-        guard let value = value else { return "0.0" }
-        return String(format: "%.1f", value)
+        guard let value = value else { return "0.5" }
+            // floor(23.8) becomes 23.0. Then we convert to Int to remove the .0
+            let wholeNumber = Int(floor(value))
+            return "\(wholeNumber).5"
     }
 }

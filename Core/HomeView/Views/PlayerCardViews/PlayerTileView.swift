@@ -169,7 +169,7 @@ struct PlayerTileView: View {
             .frame(height: 40) // Tighter buttons for grid
             .background(selected ? Color.green : Color(white: 0.22))
             .foregroundColor(.white)
-            .cornerRadius(10)
+            .cornerRadius(9)
         }
     }
     

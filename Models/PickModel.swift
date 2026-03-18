@@ -8,8 +8,6 @@
 import Foundation
 
 
-import Foundation
-
 enum SelectionDirection {
     case more, less
 }

@@ -17,9 +17,9 @@ struct HomeView: View {
     ]
     
     @State var displayStat : StatType = .points
+    
     // for sport picker
     @State var selectecSportID : Int = 1
-    
     // bottom bar
     @State var selectedTab: Int = 0
     
@@ -94,7 +94,16 @@ struct HomeView: View {
                                 .offset(x: 0, y: -13)
                             
                             // 1. REMOVE THE PADDING FROM HERE
-                            PlayerGridView(selectedPicks: $selectedPicks,displayStat: $displayStat, selectedPlayerForDetails: $selectedPlayerForDetails)
+                            
+                            seePicksHelper
+                            PlayerGridView(
+                                vm: vm,
+                                selectedPicks: selectedPicks,
+                                displayStat: displayStat,
+                                selectedPlayerForDetails: $selectedPlayerForDetails) { player, direction in
+                                    // 2. RUN THE LOGIC HERE
+                                    handlePick(player: player, direction: direction)
+                                }
 
                             // 2. ADD THIS SPACER INSTEAD
                             // This ensures there is always room to scroll past the grid
@@ -191,4 +200,57 @@ extension HomeView {
         }
         .padding(.top)
     }
+    
+    
+    
+    private func handlePick(player: PlayerModel, direction: SelectionDirection) {
+        
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+            // 1. Find if we already have a pick for this player
+            let existingPick = selectedPicks.first(where: { $0.player.id == player.id }) // player id property in PickModel
+            
+            // 2. Remove ANY existing pick for this player regardless of direction
+            selectedPicks.removeAll(where: { $0.player.id == player.id })
+            
+            // 3. If the new direction is DIFFERENT than the one we just removed, add it back
+            // (If they were the same, we leave it removed - that's a deselection)
+            if existingPick?.direction != direction {
+                if selectedPicks.count < 8 {
+                    let newPick = PickModel(
+                        player: player,
+                        statType: displayStat,
+                        targetValue: 0.0,
+                        direction: direction
+                    )
+                    selectedPicks.append(newPick)
+                }
+            }
+        }
+    }
+    
+    var seePicksHelper : some View {
+        Group {
+            Text("selectedPicks: \(selectedPicks.count)")
+            ForEach(selectedPicks) { pick in
+                HStack {
+                    // Access the player name from the player model inside the pick
+                    Text(pick.player.player ?? "Unknown Player")
+                        .fontWeight(.bold)
+                    // Show the stat type and direction
+                    Text(pick.statType.rawValue.uppercased())
+                        .font(.caption)
+                        .padding(.horizontal, 6)
+                        .background(Color.gray.opacity(0.3))
+                        .cornerRadius(4)
+                    Text(pick.direction == .more ? "MORE" : "LESS")
+                        .foregroundColor(pick.direction == .more ? .green : .red)
+                        .fontWeight(.black)
+                }
+            }
+        } // end group
+        .foregroundStyle(.green)
+    }
+    
+    
+    
 }

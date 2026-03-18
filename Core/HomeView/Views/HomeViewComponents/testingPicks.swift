@@ -16,228 +16,235 @@ struct testingPicks: View {
     // transtioning from above to players
     @StateObject var vm = PlayersViewModel()
     
-//    @State private var selectedPicks: [PickModel] = []
+    //    @State private var selectedPicks: [PickModel] = []
     @Binding var selectedPicks: [PickModel]
-
+    
     
     var currentMultiplier: String {
         switch selectedPicks.count {
-        case 2: return "4.8x"
-        case 3: return "9.6x"
-        case 4: return "16x"
-        case 5: return "19x"
-        case 6: return "40x"
-        case 7: return "60x"
-        case 8: return "100x"
+        case 2: return "3x"
+        case 3: return "6x"
+        case 4: return "10x"
+        case 5: return "12x"
+        case 6: return "25x"
+        case 7: return "40x"
+        case 8: return "80x"
         default: return "0x"
         }
     }
+    
+    var body: some View {
         
-        var body: some View {
-            
-                
-                Spacer()
-                
-                VStack(alignment: .leading, spacing: 12) {
-                    // THE HEADER LOGIC
-                    headerView
-                    // THE SLOTS LOGIC (Only shows if count > 0)
-                    if selectedPicks.count > 0 {
-                        HStack {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: -5) {
-                                    
-                                    ForEach(0..<8, id: \.self) { index in
-                                        
-                                        if index < selectedPicks.count {
-                                            // Filled Slot
-                                            let pick = selectedPicks[index]
-                                            PlayerCircleView(player: pick.player)
-                                                        .frame(width: 44, height: 44)
-//                                            Circle()
-//                                                .stroke(style: StrokeStyle(lineWidth: 2))
-//                                                .foregroundColor(.white)
-//                                                .frame(width: 40, height: 40)
-//                                                .background(Circle().fill(Color.orange))
-//                                                .shadow(color: .black.opacity(0.3), radius: 2)
-//                                                .overlay(Text("👤").font(.caption))
-                                            
-                                        } else if index < (selectedPicks.count + 1) || selectedPicks.count >= 2 {
-                                            // Dotted Slot (Show 1 extra if building, or ALL if valid)
-                                            Circle()
-                                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [3]))
-                                                .foregroundColor(.white.opacity(0.6))
-                                                .frame(width: 40, height: 40)
-                                                .background(Circle().fill(selectedPicks.count == 1 ? Color.brown : Color.orange))
-                                                .shadow(color: .black.opacity(0.3), radius: 2)
-                                                .overlay(
-                                                    Group {
-                                                        if selectedPicks.count == 1 {
-                                                            Image(systemName: "plus").foregroundStyle(.white.opacity(0.6))
-                                                        } else {
-                                                            multiplierLabel(for: index)
-                                                        }
-                                                    }
-                                                )
-                                        }
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                } // end HStack
-                                .padding(.vertical,2)
-                                .padding(.horizontal,2)
-                            } // End ScrollView
-                            .frame(maxWidth: .infinity)
-
+        
+        Spacer()
+        
+        VStack(alignment: .leading, spacing: 12) {
+            // THE HEADER LOGIC
+            headerView
+            // THE SLOTS LOGIC (Only shows if count > 0)
+            if selectedPicks.count > 0 {
+                HStack {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: -5) {
                             
-//                            Spacer()
-                            
-                            Color.clear
-                                .frame(width: UIScreen.main.bounds.width*0.4, height: 20)
-                                .overlay(
-                                    Group {
-                                        if selectedPicks.count == 1 {
-                                            Text("MAKE 2+ PICKS")
-                                                .font(.system(size: 16, weight: .black))
-                                                .italic()
-                                                .overlay {
-                                                    // The gradient we want for the letters
-                                                    LinearGradient(
-                                                        colors: [.orange, .red],
-                                                        startPoint: .topLeading,
-                                                        endPoint: .bottomTrailing
-                                                    )
-                                                    // This "cuts out" the text from the gradient
-                                                    .mask(
-                                                        Text("MAKE 2+ PICKS")
-                                                            .font(.system(size: 16, weight: .black))
-                                                            .italic()
-                                                    )
+                            ForEach(0..<8, id: \.self) { index in
+                                
+                                if index < selectedPicks.count {
+                                    // Filled Slot
+                                    let pick = selectedPicks[index]
+                                    PlayerCircleView(player: pick.player)
+                                        .frame(width: 44, height: 44)
+                                    //                                            Circle()
+                                    //                                                .stroke(style: StrokeStyle(lineWidth: 2))
+                                    //                                                .foregroundColor(.white)
+                                    //                                                .frame(width: 40, height: 40)
+                                    //                                                .background(Circle().fill(Color.orange))
+                                    //                                                .shadow(color: .black.opacity(0.3), radius: 2)
+                                    //                                                .overlay(Text("👤").font(.caption))
+                                    
+                                } else if index < (selectedPicks.count + 1) || selectedPicks.count >= 2 {
+                                    // Dotted Slot (Show 1 extra if building, or ALL if valid)
+                                    Circle()
+                                        .stroke(style: StrokeStyle(lineWidth: 1, dash: [3]))
+                                        .foregroundColor(.white.opacity(0.6))
+                                        .frame(width: 40, height: 40)
+                                        .background(Circle().fill(selectedPicks.count == 1 ? Color.brown : Color.orange))
+                                        .shadow(color: .black.opacity(0.3), radius: 2)
+                                        .overlay(
+                                            Group {
+                                                if selectedPicks.count == 1 {
+                                                    Image(systemName: "plus").foregroundStyle(.white.opacity(0.6))
+                                                } else {
+                                                    Text(multiplierFor(index: index))
+                                                        .font(.system(size: 10, weight: .bold))
+                                                        .foregroundColor(.white.opacity(0.8))
                                                 }
-                                        } else {
-                                            Button(action: {
-                                                    print("Submit Pressed")
-                                                }) {
-                                                    RoundedRectangle(cornerRadius: 10)
-                                                        .fill(.white)
-                                                        .frame(width: 150, height: 50)
-                                                        .overlay(
-                                                            VStack(spacing: 0) {
-                                                                HStack(spacing: 4) {
-                                                                    Image(systemName: "bolt.fill")
-                                                                        .foregroundStyle(.orange)
-                                                                    Text(currentMultiplier)
-                                                                }
-                                                                .font(.system(size: 18, weight: .bold))
-                                                                
-                                                                Text("Or More!")
-                                                                    .font(.system(size: 14, weight: .semibold).italic())
-                                                            }
-                                                            .foregroundColor(Color(#colorLiteral(red: 0.7967509921, green: 0.5009445243, blue: 0.1730350623, alpha: 1)))
-                                                        )
-                                                }
-                                        }
-                                    }
+                                            }
                                         )
-                            
-                        } // end Main HStack
-           
-                    }
-
-
-                } // end Vtsack
-                .padding([.leading, .trailing, .bottom], 20)
-                .padding(.bottom, 40)
-                // DYNAMIC STYLING
-                .background(
-                    RoundedRectangle(cornerRadius: 25)
-                            .fill(
-                                LinearGradient(
-                                    colors: selectedPicks.count >= 2
-                                        ? [Color(#colorLiteral(red: 0.8746507669, green: 0.5210690997, blue: 0.2556014708, alpha: 1)), Color(#colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1))] // Bright Orange
-                                        : [Color(#colorLiteral(red: 0.3604600694, green: 0.2833285628, blue: 0.05178363906, alpha: 1)), Color(#colorLiteral(red: 0.3098039329, green: 0.2039215714, blue: 0.03921568766, alpha: 1))], // Dull Brown
-                                    startPoint: .bottomLeading,
-                                    endPoint: .topTrailing
-                                )
-                            )
-                )
-                .onTapGesture {
-                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                        if selectedPicks.count < 8 {
-                            // 1. Grab a random player from the VM data
-                            if let randomPlayer = vm.allPlayers.randomElement() {
-                                let newPick = PickModel(
-                                    player: randomPlayer,
-                                    statType: .points,
-                                    targetValue: 0.0,
-                                    direction: .more
-                                )
-                                // 2. Add them to the array (this triggers the UI update)
-                                selectedPicks.append(newPick)
+                                }
                             }
-                        } else {
-                            // 3. Reset when we hit the max for testing purposes
-                            selectedPicks.removeAll()
-                        }
-                    }
-                }
-            
-//            .padding(.bottom, 400) // Keeps it above your Bottom Tab Bar
-
-        }
-        
-    
-    
-    
-        var headerView: some View {
-            HStack {
-                if selectedPicks.count == 0 {
-                    HStack {
-                        Image(systemName: "arrow.down")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(.white)
-                        Image(systemName: "arrow.up")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(.white)
-                        Text("MAKE 2+ PICKS")
-                            .font(.system(size: 16, weight: .black))
-                            .italic()
-                            .overlay {
-                                // The gradient we want for the letters
-                                LinearGradient(
-                                    colors: [.orange, .red],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                                // This "cuts out" the text from the gradient
-                                .mask(
+                            
+                            Spacer()
+                            
+                        } // end HStack
+                        .padding(.vertical,2)
+                        .padding(.horizontal,2)
+                    } // End ScrollView
+                    .frame(maxWidth: .infinity)
+                    
+                    
+                    //                            Spacer()
+                    
+                    Color.clear
+                        .frame(width: UIScreen.main.bounds.width*0.4, height: 20)
+                        .overlay(
+                            Group {
+                                if selectedPicks.count == 1 {
                                     Text("MAKE 2+ PICKS")
                                         .font(.system(size: 16, weight: .black))
                                         .italic()
-                                )
+                                        .overlay {
+                                            // The gradient we want for the letters
+                                            LinearGradient(
+                                                colors: [.orange, .red],
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                            // This "cuts out" the text from the gradient
+                                            .mask(
+                                                Text("MAKE 2+ PICKS")
+                                                    .font(.system(size: 16, weight: .black))
+                                                    .italic()
+                                            )
+                                        }
+                                } else {
+                                    Button(action: {
+                                        print("Submit Pressed")
+                                    }) {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(.white)
+                                            .frame(width: 150, height: 50)
+                                            .overlay(
+                                                VStack(spacing: 0) {
+                                                    HStack(spacing: 4) {
+                                                        Image(systemName: "bolt.fill")
+                                                            .foregroundStyle(.orange)
+                                                        Text(currentMultiplier)
+                                                    }
+                                                    .font(.system(size: 18, weight: .bold))
+                                                    
+                                                    Text("Or More!")
+                                                        .font(.system(size: 14, weight: .semibold).italic())
+                                                }
+                                                    .foregroundColor(Color(#colorLiteral(red: 0.7967509921, green: 0.5009445243, blue: 0.1730350623, alpha: 1)))
+                                            )
+                                    }
+                                }
                             }
-                        
-                        
-                    }
-                    .padding(.top,15)
-                }
-                
+                        )
+                    
+                } // end Main HStack
                 
             }
-            .frame(maxWidth: .infinity)
-            .foregroundStyle(.white)
+            
+            
+        } // end Vtsack
+        .padding([.leading, .trailing, .bottom], 20)
+        .padding(.bottom, 40)
+        // DYNAMIC STYLING
+        .background(
+            RoundedRectangle(cornerRadius: 25)
+                .fill(
+                    LinearGradient(
+                        colors: selectedPicks.count >= 2
+                        ? [Color(#colorLiteral(red: 0.8746507669, green: 0.5210690997, blue: 0.2556014708, alpha: 1)), Color(#colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1))] // Bright Orange
+                        : [Color(#colorLiteral(red: 0.3604600694, green: 0.2833285628, blue: 0.05178363906, alpha: 1)), Color(#colorLiteral(red: 0.3098039329, green: 0.2039215714, blue: 0.03921568766, alpha: 1))], // Dull Brown
+                        startPoint: .bottomLeading,
+                        endPoint: .topTrailing
+                    )
+                )
+        )
+        .onTapGesture {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                if selectedPicks.count < 8 {
+                    // 1. Grab a random player from the VM data
+                    if let randomPlayer = vm.allPlayers.randomElement() {
+                        let newPick = PickModel(
+                            player: randomPlayer,
+                            statType: .points,
+                            targetValue: 0.0,
+                            direction: .more
+                        )
+                        // 2. Add them to the array (this triggers the UI update)
+                        selectedPicks.append(newPick)
+                    }
+                } else {
+                    // 3. Reset when we hit the max for testing purposes
+                    selectedPicks.removeAll()
+                }
+            }
         }
         
-        @ViewBuilder
-        func multiplierLabel(for index: some BinaryInteger) -> some View {
-            // Only show multipliers (3x, 6x...) if valid (count >= 2)
-            if selectedPicks.count >= 2 {
-                Text("\(index*3-1)x")
-                    .font(.system(size: 8))
-                    .foregroundColor(.white)
+        //            .padding(.bottom, 400) // Keeps it above your Bottom Tab Bar
+        
+    }
+    
+    
+    
+    
+    var headerView: some View {
+        HStack {
+            if selectedPicks.count == 0 {
+                HStack {
+                    Image(systemName: "arrow.down")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
+                    Image(systemName: "arrow.up")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
+                    Text("MAKE 2+ PICKS")
+                        .font(.system(size: 16, weight: .black))
+                        .italic()
+                        .overlay {
+                            // The gradient we want for the letters
+                            LinearGradient(
+                                colors: [.orange, .red],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                            // This "cuts out" the text from the gradient
+                            .mask(
+                                Text("MAKE 2+ PICKS")
+                                    .font(.system(size: 16, weight: .black))
+                                    .italic()
+                            )
+                        }
+                    
+                    
+                }
+                .padding(.top,15)
             }
-        }}
+            
+            
+        }
+        .frame(maxWidth: .infinity)
+        .foregroundStyle(.white)
+    }
+    
+    @ViewBuilder
+    func multiplierFor(index: Int) -> String {
+        switch index + 1 { // index is 0-7, so index+1 is the "Pick Number"
+        case 2: return "3x"
+        case 3: return "6x"
+        case 4: return "10x"
+        case 5: return "12x"
+        case 6: return "25x"
+        case 7: return "40x"
+        case 8: return "80x"
+        default: return ""
+        }
+    }
+}
 
 #Preview {
     testingPicks(selectedPicks: .constant([]))

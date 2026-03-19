@@ -1,0 +1,42 @@
+[
+    {
+        "homeTeam": "CHA",
+        "awayTeam": "ORL",
+        "time": "7:00 pm ET"
+    },
+    {
+        "homeTeam": "WAS",
+        "awayTeam": "DET",
+        "time": "7:00 pm ET"
+    },
+    {
+        "homeTeam": "MIA",
+        "awayTeam": "LAL",
+        "time": "8:00 pm ET"
+    },
+    {
+        "homeTeam": "CHI",
+        "awayTeam": "CLE",
+        "time": "8:00 pm ET"
+    },
+    {
+        "homeTeam": "NOP",
+        "awayTeam": "LAC",
+        "time": "8:00 pm ET"
+    },
+    {
+        "homeTeam": "SAS",
+        "awayTeam": "PHX",
+        "time": "8:00 pm ET"
+    },
+    {
+        "homeTeam": "UTA",
+        "awayTeam": "MIL",
+        "time": "9:00 pm ET"
+    },
+    {
+        "homeTeam": "SAC",
+        "awayTeam": "PHI",
+        "time": "10:00 pm ET"
+    }
+]

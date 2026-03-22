@@ -35,9 +35,11 @@ struct FinalTabs: View {
                     .tag(4)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+            .ignoresSafeArea() // 2. Tell the TabView container to ignore safe areas
             
             BottomTabBarView(selectedTab: $selectedTab)
         }
+        .preferredColorScheme(.dark) // 3. Forces status bar text to white and background to dark
     }
 }
 

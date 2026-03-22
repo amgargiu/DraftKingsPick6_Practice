@@ -43,107 +43,106 @@ struct HomeView: View {
     
     var body: some View {
         
-        NavigationStack {
-            ZStack {
+        ZStack {
+            
+            Color
+                .black.edgesIgnoringSafeArea(.all)
                 
-                Color
-                    .black.edgesIgnoringSafeArea(.all)
-                    
+            
+            VStack (spacing: 0) {
+                topBar
                 
-                VStack (spacing: 0) {
-                    topBar
-                    
-                    ScrollView {
-                        VStack {
-                            banners
-                                .padding(.top,5)
+                ScrollView {
+                    VStack {
+                        banners
+                            .padding(.top,5)
 
-                            
-                            
-                            SportPickerView(selectedSportID: $selectecSportID)
-                                .padding(.top,10)
-                            
-                            
+                        
+                        
+                        SportPickerView(selectedSportID: $selectecSportID)
+                            .padding(.top,10)
+                        
+                        
+                        
+                        HStack {
                             
                             HStack {
-                                
+                                Image(systemName: "magnifyingglass")
+                                Image(systemName: "calendar")
+                            }
+                            .font(.title2)
+                            .frame(maxWidth: UIScreen.main.bounds.width/5, alignment: .trailing)
+                            
+                            
+                            ScrollView(.horizontal, showsIndicators: false)  {
                                 HStack {
-                                    Image(systemName: "magnifyingglass")
-                                    Image(systemName: "calendar")
-                                }
-                                .font(.title2)
-                                .frame(maxWidth: UIScreen.main.bounds.width/5, alignment: .trailing)
-                                
-                                
-                                ScrollView(.horizontal, showsIndicators: false)  {
-                                    HStack {
-                                        ForEach(vm.games) { game in
-                                            GameCapsuleView(vm: vm, game: game, selectedGameID: $vm.selectedGameID)
-                                                .onTapGesture {
-                                                    if vm.selectedGameID == game.id {
-                                                            vm.selectedGameID = nil
-                                                        } else {
-                                                            vm.selectedGameID = game.id
-                                                        }
-                                                }
-                                        }
+                                    ForEach(vm.games) { game in
+                                        GameCapsuleView(vm: vm, game: game, selectedGameID: $vm.selectedGameID)
+                                            .onTapGesture {
+                                                if vm.selectedGameID == game.id {
+                                                        vm.selectedGameID = nil
+                                                    } else {
+                                                        vm.selectedGameID = game.id
+                                                    }
+                                            }
                                     }
                                 }
                             }
-                            .foregroundStyle(Color.white)
-                            .padding(5)
+                        }
+                        .foregroundStyle(Color.white)
+                        .padding(5)
+                        .padding(.top,5)
+
+                        
+                        
+                        StatPickerView(selection: $displayStat)
                             .padding(.top,5)
 
-                            
-                            
-                            StatPickerView(selection: $displayStat)
-                                .padding(.top,5)
+                        Divider()
+                            .frame(height: 1) // Give it some actual thickness
+                            .background(Color.gray.opacity(0.3)) // This forces the color to show
+                            .offset(x: 0, y: -13)
+                        
+                        // 1. REMOVE THE PADDING FROM HERE
+                        
+                        seePicksHelper
+                        
+                        PlayerGridView(
+                            vm: vm,
+                            selectedPicks: vm.selectedPicks,
+                            displayStat: displayStat,
+                            selectedPlayerForDetails: $selectedPlayerForDetails) { player, direction, value in
+                                // 2. RUN THE LOGIC HERE
+                                handlePick(player: player, direction: direction, value: value)
+                            }
 
-                            Divider()
-                                .frame(height: 1) // Give it some actual thickness
-                                .background(Color.gray.opacity(0.3)) // This forces the color to show
-                                .offset(x: 0, y: -13)
-                            
-                            // 1. REMOVE THE PADDING FROM HERE
-                            
-                            seePicksHelper
-                            
-                            PlayerGridView(
-                                vm: vm,
-                                selectedPicks: vm.selectedPicks,
-                                displayStat: displayStat,
-                                selectedPlayerForDetails: $selectedPlayerForDetails) { player, direction, value in
-                                    // 2. RUN THE LOGIC HERE
-                                    handlePick(player: player, direction: direction, value: value)
-                                }
+                        // 2. ADD THIS SPACER INSTEAD
+                        // This ensures there is always room to scroll past the grid
+                        // You can make this dynamic: selectedPicks.isEmpty ? 20 : 120
+                                Spacer()
+                                    .frame(height: vm.selectedPicks.count == 0 ? 120 : 150)
 
-                            // 2. ADD THIS SPACER INSTEAD
-                            // This ensures there is always room to scroll past the grid
-                            // You can make this dynamic: selectedPicks.isEmpty ? 20 : 120
-                                    Spacer()
-                                        .frame(height: vm.selectedPicks.count == 0 ? 120 : 150)
+                    }
 
-                        }
-
-                    } // end ScrollView
-                } // end VStack
-                .overlay(alignment: .bottom, content: {
-                    VStack(spacing: -45) { // Negative spacing allows the orange bar to "tuck" behind the tab bar
-                        PicksPreviewView(vm2: vm, selectedPicks: $vm.selectedPicks)
-                                .zIndex(0) // Lower layer
-                            
-                            BottomTabBarView(selectedTab: $selectedTab)
-                                .zIndex(1) // Higher layer (stays on top)
-                        }
-                        // This is the magic line: it tells the whole stack to drop into the bottom notch
-                })
-                .sheet(item: $selectedPlayerForDetails, content: { player in
-                    PlayerDetailView(player: player)
-                })
-                
-            } // end ZStack
+                } // end ScrollView
+            } // end VStack
+            .overlay(alignment: .bottom, content: {
+                VStack(spacing: -45) { // Negative spacing allows the orange bar to "tuck" behind the tab bar
+                    PicksPreviewView(vm2: vm, selectedPicks: $vm.selectedPicks)
+                            .zIndex(0) // Lower layer
+                        
+                        BottomTabBarView(selectedTab: $selectedTab)
+                            .zIndex(1) // Higher layer (stays on top)
+                    }
+                    // This is the magic line: it tells the whole stack to drop into the bottom notch
+            })
+            .sheet(item: $selectedPlayerForDetails, content: { player in
+                PlayerDetailView(player: player)
+            })
+            .toolbar(.hidden, for: .navigationBar) // Kills the "White Ghost Bar"
             
-        } // end NaviagationStack
+        } // end ZStack
+            
     }
 
 }
@@ -174,6 +173,7 @@ extension HomeView {
         .frame(height: 60)
         .background(
             Color(white: 0.13)
+                .ignoresSafeArea(edges: .top)
         )
         .foregroundStyle(.white)
         .bold()

@@ -8,23 +8,25 @@
 import Foundation
 import Combine
 
-class PlayersViewModel: ObservableObject {
-    
-    @Published var allPlayers: [PlayerModel] = []
-    let playerService = PlayersDataService()
-    var cancellables: Set<AnyCancellable> = []
-
-    
-    
-    init() {
-        addSub()
-    }
-    
-    func addSub() {
-        playerService.$players
-            .sink(receiveValue: { [weak self] players in
-                self?.allPlayers = players
-            })
-            .store(in: &cancellables)
-    }
-}
+//class PlayersViewModel: ObservableObject {
+//    
+//    
+//    // moved stuff to HomeViewModel which need to use / provide this array
+//    @Published var allPlayers: [PlayerModel] = []
+//    let playerService = PlayersDataService()
+//    var cancellables: Set<AnyCancellable> = []
+//
+//    
+//    
+//    init() {
+//        addSub()
+//    }
+//    
+//    func addSub() {
+//        playerService.$players
+//            .sink(receiveValue: { [weak self] players in
+//                self?.allPlayers = players
+//            })
+//            .store(in: &cancellables)
+//    }
+//}

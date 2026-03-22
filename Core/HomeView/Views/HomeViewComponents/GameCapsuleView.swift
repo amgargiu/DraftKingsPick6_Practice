@@ -8,16 +8,21 @@
 import SwiftUI
 
 struct GameCapsuleView: View {
+    
+    @ObservedObject var vm: HomeViewModel
     let game: GameModel
+    @Binding var selectedGameID: UUID?
+    @State var load = false
+    
     
     var body: some View {
         ZStack {
             Capsule()
-                .fill(Color(white: 0.15)) // Dark grey background
+                .fill(selectedGameID == game.id ? .gray : Color(white: 0.15)) // Dark grey background
             
             HStack(spacing: 10) {
                 // 1. AWAY TEAM LOGO (Left)
-                teamLogo(url: game.awayTeamImage)
+                teamLogo(team: game.homeTeam.uppercased())
                 
                 // 2. MIDDLE INFO
                 VStack(spacing: 2) {
@@ -32,24 +37,34 @@ struct GameCapsuleView: View {
                 .frame(minWidth: 50) // Keeps the time centered
                 
                 // 3. HOME TEAM LOGO (Right)
-                teamLogo(url: game.homeTeamImage)
+                teamLogo(team: game.awayTeam.uppercased())
             }
             .padding(.horizontal, 5)
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                load.toggle()
+            }
         }
     }
     
     // Helper for loading logos
-    private func teamLogo(url: String) -> some View {
-        AsyncImage(url: URL(string: url)) { image in
-            image.resizable()
-                .scaledToFit()
-        } placeholder: {
-            Circle().fill(.gray.opacity(0.3))
+    @ViewBuilder
+    private func teamLogo(team: String) -> some View {
+        
+        if let image = PlayerTeamImagesDataService.shared.teamdict[team ?? ""] {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 32, height: 32)
+        } else {
+                ProgressView()
+                    .frame(width: 32, height: 32)
         }
-        .frame(width: 32, height: 32)
+ 
     }
 }
 
 #Preview {
-    GameCapsuleView(game: DevPreview.game)
+    GameCapsuleView(vm: HomeViewModel(), game: GameModel(homeTeam: "was", awayTeam: "gsw", time: "8:00"), selectedGameID: .constant(UUID()))
 }

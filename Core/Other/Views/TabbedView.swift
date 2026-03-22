@@ -27,10 +27,10 @@ struct TabbedView: View {
         
         TabView(selection: $selectedTab) {
             
-            AllPlayersView()
+            HomeView()
                 .tag(0)
             
-            PlayerCardView(player: DevPreview.player)
+            PlayerDetailView(player: DevPreview.player)
                 .tag(1)
             
             PlayerImageView(player: DevPreview.player)

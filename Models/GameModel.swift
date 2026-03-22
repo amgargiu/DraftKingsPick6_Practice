@@ -8,12 +8,9 @@
 import Foundation
 
 
-struct GameModel: Identifiable {
-    let id: String
+struct GameModel: Identifiable, Codable {
+    let id: UUID = UUID()
     let homeTeam: String
-    let homeTeamImage: String
     let awayTeam: String
-    let awayTeamImage: String
-    let weekday: String
     let time: String
 }

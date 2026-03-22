@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PlayerGridView: View {
     
-    @ObservedObject var vm : PlayersViewModel // needed to loop on for grid - init in homeview - mayeb in Env?
+    @ObservedObject var vm : HomeViewModel // needed to loop on for grid - init in homeview - mayeb in Env?
     
     // The "Source of Truth" for what is selected
     // Note: If you want the bottom bar to see this, you might move this to @Binding later
@@ -30,7 +30,7 @@ struct PlayerGridView: View {
     @Binding var selectedPlayerForDetails: PlayerModel?
     
     
-    var onPick: (PlayerModel, SelectionDirection) -> Void
+    var onPick: (PlayerModel, SelectionDirection, String) -> Void
     
     
     var body: some View {
@@ -48,8 +48,8 @@ struct PlayerGridView: View {
                             // Pass whether THIS player is currently in the picks array
                             selectedDirection: selectedPicks.first(where: { $0.player.id == player.id })?.direction,
                             // Pass the action to handle the selection logic
-                            onSelect: { direction in
-                                onPick(player, direction) // PASS IT UP
+                            onSelect: { direction, value in
+                                onPick(player, direction, value) // PASS IT UP
                             }
                         )
                         .overlay(alignment: .bottom) {
@@ -78,10 +78,10 @@ struct PlayerGridView: View {
 
 #Preview {
     PlayerGridView(
-        vm: PlayersViewModel(),
+        vm: HomeViewModel(),
         selectedPicks: [], displayStat: .points,
         selectedPlayerForDetails: .constant(nil),
-        onPick: { player, direction in
+        onPick: { player, direction, value in
         print("Preview: Picked \(player.player ?? "Unknown") for \(direction)")
     })
 }

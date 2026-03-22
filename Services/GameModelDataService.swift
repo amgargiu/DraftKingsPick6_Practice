@@ -6,47 +6,34 @@
 //
 
 import Foundation
-
+import Combine
 
 class GameModelDataService {
     
-    static let mockGames: [GameModel] = [
-        GameModel(
-            id: "1",
-            homeTeam: "Heat", homeTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
-            awayTeam: "Magic", awayTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
-            weekday: "WED", time: "7:30 PM"
-        ),
-        GameModel(
-            id: "2",
-            homeTeam: "Lakers", homeTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
-            awayTeam: "Warriors", awayTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/gs.png",
-            weekday: "WED", time: "10:00 PM"
-        ),
-        GameModel(
-            id: "3",
-            homeTeam: "Celtics", homeTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
-            awayTeam: "Knicks", awayTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
-            weekday: "THU", time: "8:00 PM"
-        ),
-        GameModel(
-            id: "4",
-            homeTeam: "Suns", homeTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
-            awayTeam: "Mavericks", awayTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
-            weekday: "THU", time: "10:30 PM"
-        ),
-        GameModel(
-            id: "5",
-            homeTeam: "Bucks", homeTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
-            awayTeam: "76ers", awayTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
-            weekday: "FRI", time: "7:00 PM"
-        ),
-        GameModel(
-            id: "6",
-            homeTeam: "Nuggets", homeTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
-            awayTeam: "Clippers", awayTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
-            weekday: "FRI", time: "9:30 PM"
-        )
-    ]
     
+    @Published var games: [GameModel] = []
+    var cancellables: Set<AnyCancellable> = []
+    
+    
+    init() {
+        downloadPlayers()
+    }
+    
+    
+    
+    func downloadPlayers() {
+        
+        guard let url = URL(string: "https://raw.githubusercontent.com/amgargiu/DraftKingsPick6_Practice/refs/heads/data/games.json") else { return }
+        
+        NetworkingManager.download(url: url)
+            .decode(type: [GameModel].self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { completion in
+                print("Completion:", completion)
+            }, receiveValue: { [weak self] gameData in
+                print("Games downloaded:", gameData.count)
+                print(gameData.first ?? "No first player")
+                self?.games = gameData
+            })
+            .store(in: &cancellables)
+    }
 }

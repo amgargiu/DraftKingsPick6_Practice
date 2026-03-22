@@ -13,7 +13,16 @@ struct PlayerTileView: View {
     
     // NEW: These allow the Tile to communicate with your main Picks array
     let selectedDirection: SelectionDirection?
-    var onSelect: (SelectionDirection) -> Void
+    var onSelect: (SelectionDirection, String) -> Void
+    
+    private var currentStatValue: String {
+        switch displayStat {
+        case .points:   return player.ptsString
+        case .rebounds: return player.rebString
+        case .assists:  return player.astString
+        }
+    }
+    
 
     var body: some View {
         VStack(spacing: 0) {
@@ -101,18 +110,9 @@ struct PlayerTileView: View {
                     
                     VStack(spacing: -2) {
                         
-                        Group {
-                            switch displayStat {
-                            case .points:
-                                Text("\(player.ptsString)")
-                            case .rebounds:
-                                Text("\(player.rebString)")
-                            case .assists:
-                                Text("\(player.astString)")
-                            }
-                        }
-                        .font(.system(size: 16, weight: .black))
-                        .foregroundColor(.white)
+                        Text("\(currentStatValue)") // Using the new variable here
+                                .font(.system(size: 16, weight: .black))
+                                .foregroundColor(.white)
                         
                         Text(displayStat.rawValue)
                                 .font(.system(size: 12, weight: .bold))
@@ -133,12 +133,12 @@ struct PlayerTileView: View {
             HStack(spacing: 8) {
                 // Calls onSelect with .more
                 actionButton(title: "More", icon: "arrow.up", selected: selectedDirection == .more) {
-                    onSelect(.more)
+                    onSelect(.more, currentStatValue)
                 }
                     
                 // Calls onSelect with .less
                 actionButton(title: "Less", icon: "arrow.down", selected: selectedDirection == .less) {
-                    onSelect(.less)
+                    onSelect(.less, currentStatValue)
                 }
             }
             .padding(.top, 12)
@@ -192,7 +192,7 @@ struct PlayerTileView: View {
         player: DevPreview.player,
         displayStat: .points,
         selectedDirection: .none,
-        onSelect: { _ in }
+        onSelect: { _,_ in }
     )
 }
 

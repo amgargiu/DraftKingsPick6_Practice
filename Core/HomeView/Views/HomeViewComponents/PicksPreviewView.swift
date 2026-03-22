@@ -8,13 +8,13 @@
 
 import SwiftUI
 
-struct testingPicks: View {
-    
+struct PicksPreviewView: View {
     
     
     @State private var selectedCount: Int = 0
     // transtioning from above to players
-    @StateObject var vm = PlayersViewModel()
+    @ObservedObject var vm2: HomeViewModel
+
     
     //    @State private var selectedPicks: [PickModel] = []
     @Binding var selectedPicks: [PickModel]
@@ -119,7 +119,7 @@ struct testingPicks: View {
                                         }
                                 } else {
                                     Button(action: {
-                                        print("Submit Pressed")
+                                        vm2.addGroup(currentMultiplier: currentMultiplier)
                                     }) {
                                         RoundedRectangle(cornerRadius: 10)
                                             .fill(.white)
@@ -168,11 +168,11 @@ struct testingPicks: View {
             withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
                 if selectedPicks.count < 8 {
                     // 1. Grab a random player from the VM data
-                    if let randomPlayer = vm.allPlayers.randomElement() {
+                    if let randomPlayer = vm2.allPlayers.randomElement() {
                         let newPick = PickModel(
                             player: randomPlayer,
                             statType: .points,
-                            targetValue: 0.0,
+                            targetValue: "0.0",
                             direction: .more
                         )
                         // 2. Add them to the array (this triggers the UI update)
@@ -247,5 +247,6 @@ struct testingPicks: View {
 }
 
 #Preview {
-    testingPicks(selectedPicks: .constant([]))
+    PicksPreviewView(vm2: HomeViewModel(), selectedPicks: .constant([]))
+        // constant array means does not work
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject var vm = PlayersViewModel() // not really needed here
+    @StateObject var vm = HomeViewModel()
     
     let columns: [GridItem] = [
         GridItem(.flexible()),
@@ -35,8 +35,10 @@ struct HomeView: View {
     @State var selectedPlayerForDetails : PlayerModel? = nil
     
     //For Gird view and maybe even testing pick prevew view
-    @State private var selectedPicks: [PickModel] = []
-
+//    @State private var vm2.selectedPicks: [PickModel] = []
+    
+//    @State var selectedGame : GameModel? = nil
+    
     
     
     var body: some View {
@@ -44,7 +46,9 @@ struct HomeView: View {
         NavigationStack {
             ZStack {
                 
-                Color.black.edgesIgnoringSafeArea(.all)
+                Color
+                    .black.edgesIgnoringSafeArea(.all)
+                    
                 
                 VStack (spacing: 0) {
                     topBar
@@ -73,8 +77,15 @@ struct HomeView: View {
                                 
                                 ScrollView(.horizontal, showsIndicators: false)  {
                                     HStack {
-                                        ForEach(GameModelDataService.mockGames) { game in
-                                            GameCapsuleView(game: game)
+                                        ForEach(vm.games) { game in
+                                            GameCapsuleView(vm: vm, game: game, selectedGameID: $vm.selectedGameID)
+                                                .onTapGesture {
+                                                    if vm.selectedGameID == game.id {
+                                                            vm.selectedGameID = nil
+                                                        } else {
+                                                            vm.selectedGameID = game.id
+                                                        }
+                                                }
                                         }
                                     }
                                 }
@@ -96,20 +107,21 @@ struct HomeView: View {
                             // 1. REMOVE THE PADDING FROM HERE
                             
                             seePicksHelper
+                            
                             PlayerGridView(
                                 vm: vm,
-                                selectedPicks: selectedPicks,
+                                selectedPicks: vm.selectedPicks,
                                 displayStat: displayStat,
-                                selectedPlayerForDetails: $selectedPlayerForDetails) { player, direction in
+                                selectedPlayerForDetails: $selectedPlayerForDetails) { player, direction, value in
                                     // 2. RUN THE LOGIC HERE
-                                    handlePick(player: player, direction: direction)
+                                    handlePick(player: player, direction: direction, value: value)
                                 }
 
                             // 2. ADD THIS SPACER INSTEAD
                             // This ensures there is always room to scroll past the grid
                             // You can make this dynamic: selectedPicks.isEmpty ? 20 : 120
                                     Spacer()
-                                        .frame(height: selectedPicks.count == 0 ? 120 : 150)
+                                        .frame(height: vm.selectedPicks.count == 0 ? 120 : 150)
 
                         }
 
@@ -117,7 +129,7 @@ struct HomeView: View {
                 } // end VStack
                 .overlay(alignment: .bottom, content: {
                     VStack(spacing: -45) { // Negative spacing allows the orange bar to "tuck" behind the tab bar
-                        testingPicks(selectedPicks: $selectedPicks)
+                        PicksPreviewView(vm2: vm, selectedPicks: $vm.selectedPicks)
                                 .zIndex(0) // Lower layer
                             
                             BottomTabBarView(selectedTab: $selectedTab)
@@ -130,6 +142,7 @@ struct HomeView: View {
                 })
                 
             } // end ZStack
+            
         } // end NaviagationStack
     }
 
@@ -203,35 +216,35 @@ extension HomeView {
     
     
     
-    private func handlePick(player: PlayerModel, direction: SelectionDirection) {
+    private func handlePick(player: PlayerModel, direction: SelectionDirection, value: String) {
         
         withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
             // 1. Find if we already have a pick for this player
-            let existingPick = selectedPicks.first(where: { $0.player.id == player.id }) // player id property in PickModel
+            let existingPick = vm.selectedPicks.first(where: { $0.player.id == player.id }) // player id property in PickModel
             
             // 2. Remove ANY existing pick for this player regardless of direction
-            selectedPicks.removeAll(where: { $0.player.id == player.id })
+            vm.selectedPicks.removeAll(where: { $0.player.id == player.id })
             
             // 3. If the new direction is DIFFERENT than the one we just removed, add it back
             // (If they were the same, we leave it removed - that's a deselection)
             if existingPick?.direction != direction {
-                if selectedPicks.count < 8 {
+                if vm.selectedPicks.count < 8 {
                     let newPick = PickModel(
                         player: player,
                         statType: displayStat,
-                        targetValue: 0.0,
+                        targetValue: value,
                         direction: direction
                     )
-                    selectedPicks.append(newPick)
+                    vm.selectedPicks.append(newPick)
                 }
             }
         }
     }
-    
+
     var seePicksHelper : some View {
         Group {
-            Text("selectedPicks: \(selectedPicks.count)")
-            ForEach(selectedPicks) { pick in
+            Text("selectedPicks: \(vm.selectedPicks.count)")
+            ForEach(vm.selectedPicks) { pick in
                 HStack {
                     // Access the player name from the player model inside the pick
                     Text(pick.player.player ?? "Unknown Player")
@@ -242,6 +255,8 @@ extension HomeView {
                         .padding(.horizontal, 6)
                         .background(Color.gray.opacity(0.3))
                         .cornerRadius(4)
+                    Text(pick.targetValue)
+                        .foregroundStyle(pick.direction == .more ? .white : .red)
                     Text(pick.direction == .more ? "MORE" : "LESS")
                         .foregroundColor(pick.direction == .more ? .green : .red)
                         .fontWeight(.black)

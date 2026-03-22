@@ -9,14 +9,14 @@ import Foundation
 import SwiftUI
 
 
-class CacheManager {
+class CacheManager: ObservableObject { // made it an observable object
     
     static let instance = CacheManager()
     private init() {}
     
     var imageCache: NSCache<NSString, UIImage> = {
         let cache = NSCache<NSString, UIImage>()
-        cache.countLimit = 250
+        cache.countLimit = 100
         cache.totalCostLimit = 100 * 1024 * 1024
         return cache
     }()

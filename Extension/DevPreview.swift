@@ -51,14 +51,90 @@ class DevPreview {
         injuryStatus: "Available"
     )
     
-    static let game = GameModel(
-            id: "1",
-            homeTeam: "Heat",
-            homeTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
-            awayTeam: "Magic",
-            awayTeamImage: "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
-            weekday: "WED", time: "7:30 PM"
-        )
     
+    
+    
+    // samples
+    
+    static let fakePick1 = PickModel(
+        player: PlayerModel(
+            id: 1,
+            player: "LeBron James",
+            image: nil,
+            team: "LAL",
+            teamImage: nil,
+            position: "SF",
+            opp: "BOS",
+            time: "7:30 PM",
+            MIN: nil, FGM: nil, FGA: nil, FTM: nil, FTA: nil,
+            threePM: nil, REB: nil, AST: nil, STL: nil, BLK: nil, TO: nil, PTS: nil,
+            last5Min: nil, last5FGM: nil, last5FGA: nil, last5FTM: nil, last5FTA: nil,
+            last5ThreePM: nil, last5REB: nil, last5AST: nil, last5STL: nil, last5BLK: nil,
+            last5TO: nil, last5PTS: nil,
+            pctRostered: nil,
+            fantasyPtsTotal: nil,
+            fantasyPtsAvg: nil,
+            injuryStatus: nil
+        ),
+        statType: .points,
+        targetValue: "27.5",
+        direction: .more
+    )
+
+    static let fakePick2 = PickModel(
+        player: PlayerModel(
+            id: 2,
+            player: "Stephen Curry",
+            image: nil,
+            team: "GSW",
+            teamImage: nil,
+            position: "PG",
+            opp: "PHX",
+            time: "10:00 PM",
+            MIN: nil, FGM: nil, FGA: nil, FTM: nil, FTA: nil,
+            threePM: nil, REB: nil, AST: nil, STL: nil, BLK: nil, TO: nil, PTS: nil,
+            last5Min: nil, last5FGM: nil, last5FGA: nil, last5FTM: nil, last5FTA: nil,
+            last5ThreePM: nil, last5REB: nil, last5AST: nil, last5STL: nil, last5BLK: nil,
+            last5TO: nil, last5PTS: nil,
+            pctRostered: nil,
+            fantasyPtsTotal: nil,
+            fantasyPtsAvg: nil,
+            injuryStatus: nil
+        ),
+        statType: .assists,
+        targetValue: "4.5",
+        direction: .more
+    )
+
+    static let fakePick3 = PickModel(
+        player: PlayerModel(
+            id: 3,
+            player: "Jayson Tatum",
+            image: nil,
+            team: "BOS",
+            teamImage: nil,
+            position: "SF",
+            opp: "LAL",
+            time: "7:30 PM",
+            MIN: nil, FGM: nil, FGA: nil, FTM: nil, FTA: nil,
+            threePM: nil, REB: nil, AST: nil, STL: nil, BLK: nil, TO: nil, PTS: nil,
+            last5Min: nil, last5FGM: nil, last5FGA: nil, last5FTM: nil, last5FTA: nil,
+            last5ThreePM: nil, last5REB: nil, last5AST: nil, last5STL: nil, last5BLK: nil,
+            last5TO: nil, last5PTS: nil,
+            pctRostered: nil,
+            fantasyPtsTotal: nil,
+            fantasyPtsAvg: nil,
+            injuryStatus: nil
+        ),
+        statType: .rebounds,
+        targetValue: "8.5",
+        direction: .less
+    )
+    
+    static let fakeGroup = PickGroupModel(
+        title: "Tonight’s Picks",
+        multiplier: "6x",
+        picks: [fakePick1, fakePick2, fakePick3]
+    )
     
 }

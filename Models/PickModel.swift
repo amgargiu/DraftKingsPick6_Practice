@@ -17,7 +17,7 @@ struct PickModel: Identifiable, Equatable {
     var id: UUID = UUID()
     let player: PlayerModel
     let statType: StatType
-    let targetValue: Double
+    let targetValue: String
     var direction: SelectionDirection
 
     static func == (lhs: PickModel, rhs: PickModel) -> Bool {

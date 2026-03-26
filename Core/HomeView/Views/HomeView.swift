@@ -219,27 +219,31 @@ extension HomeView {
     private func handlePick(player: PlayerModel, direction: SelectionDirection, value: String) {
         
         withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-            // 1. Find if we already have a pick for this player
-            let existingPick = vm.selectedPicks.first(where: { $0.player.id == player.id }) // player id property in PickModel
-            
-            // 2. Remove ANY existing pick for this player regardless of direction
-            vm.selectedPicks.removeAll(where: { $0.player.id == player.id })
-            
-            // 3. If the new direction is DIFFERENT than the one we just removed, add it back
-            // (If they were the same, we leave it removed - that's a deselection)
-            if existingPick?.direction != direction {
-                if vm.selectedPicks.count < 8 {
-                    let newPick = PickModel(
-                        player: player,
-                        statType: displayStat,
-                        targetValue: value,
-                        direction: direction
-                    )
-                    vm.selectedPicks.append(newPick)
+                // 1. Find if we already have a pick for this specific player AND this specific stat
+                let existingPick = vm.selectedPicks.first(where: {
+                    $0.player.id == player.id && $0.statType == displayStat
+                })
+                
+                // 2. Remove ONLY the existing pick for this player-stat combo
+                // This prevents picking 'More Points' from deleting your 'Less Assists' pick
+                vm.selectedPicks.removeAll(where: {
+                    $0.player.id == player.id && $0.statType == displayStat
+                })
+                
+                // 3. Logic remains the same: toggle off if same direction, update if different
+                if existingPick?.direction != direction {
+                    if vm.selectedPicks.count < 8 {
+                        let newPick = PickModel(
+                            player: player,
+                            statType: displayStat,
+                            targetValue: value,
+                            direction: direction
+                        )
+                        vm.selectedPicks.append(newPick)
+                    }
                 }
             }
         }
-    }
 
     var seePicksHelper : some View {
         Group {

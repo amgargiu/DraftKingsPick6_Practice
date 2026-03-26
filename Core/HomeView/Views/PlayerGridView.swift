@@ -46,7 +46,9 @@ struct PlayerGridView: View {
                             player: player,
                             displayStat: displayStat,
                             // Pass whether THIS player is currently in the picks array
-                            selectedDirection: selectedPicks.first(where: { $0.player.id == player.id })?.direction,
+                            selectedDirection: selectedPicks.first(where: {
+                                $0.player.id == player.id && $0.statType == displayStat
+                            })?.direction,
                             // Pass the action to handle the selection logic
                             onSelect: { direction, value in
                                 onPick(player, direction, value) // PASS IT UP

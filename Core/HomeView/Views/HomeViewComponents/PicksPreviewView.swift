@@ -231,7 +231,7 @@ struct PicksPreviewView: View {
         .foregroundStyle(.white)
     }
     
-    @ViewBuilder
+//    @ViewBuilder
     func multiplierFor(index: Int) -> String {
         switch index + 1 { // index is 0-7, so index+1 is the "Pick Number"
         case 2: return "3x"

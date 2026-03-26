@@ -49,6 +49,7 @@ struct GameCapsuleView: View {
     }
     
     // Helper for loading logos
+    
     @ViewBuilder
     private func teamLogo(team: String) -> some View {
         

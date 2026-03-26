@@ -10,7 +10,7 @@ import SwiftUI
 
 struct FinalTabs: View {
     
-    @State var selectedTab: Int = 0
+    @State var selectedTab: Int = 5
     @StateObject var vm = HomeViewModel()
     
     var body: some View {
@@ -33,13 +33,24 @@ struct FinalTabs: View {
                 
                 RewardsView()
                     .tag(4)
+                
+                DictionaryDebugView()
+                    .tag(5)
+
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .ignoresSafeArea() // 2. Tell the TabView container to ignore safe areas
+            .safeAreaInset(edge: .leading) {
+                Button {
+                    selectedTab = 5
+                } label: {
+                    Circle().fill(Color.red).frame(width: 40, height: 40)
+                }
+
+            }
             
             BottomTabBarView(selectedTab: $selectedTab)
         }
-        .preferredColorScheme(.dark) // 3. Forces status bar text to white and background to dark
     }
 }
 

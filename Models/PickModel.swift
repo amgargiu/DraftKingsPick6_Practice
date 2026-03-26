@@ -14,7 +14,12 @@ enum SelectionDirection {
 
 struct PickModel: Identifiable, Equatable {
     // This ensures the "Pick" ID is the same as the "Player" ID
-    var id: UUID = UUID()
+    // 1. The ID is now a combination of Name + Stat
+        // Example: "LeBron James-points"
+    var id: String {
+            "\(player.player ?? "Unknown")-\(statType.rawValue)"
+    }
+    
     let player: PlayerModel
     let statType: StatType
     let targetValue: String

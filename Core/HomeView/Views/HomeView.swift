@@ -107,14 +107,16 @@ struct HomeView: View {
                         
                         seePicksHelper
                         
-                        PlayerGridView(
-                            vm: vm,
-                            selectedPicks: vm.selectedPicks,
-                            displayStat: displayStat,
-                            selectedPlayerForDetails: $selectedPlayerForDetails) { player, direction, value in
-                                // 2. RUN THE LOGIC HERE
-                                handlePick(player: player, direction: direction, value: value)
-                            }
+
+                        
+                        PlayerGridView(vm: vm,
+                                       selectedPicks: vm.selectedPicks,
+                                       displayStat: displayStat,
+                                       selectedPlayerForDetails: $selectedPlayerForDetails,
+                                       onPick: { player, direction, value in
+                                            handlePick(player: player, direction: direction, value: value)
+                                        }
+                        )
 
                         // 2. ADD THIS SPACER INSTEAD
                         // This ensures there is always room to scroll past the grid

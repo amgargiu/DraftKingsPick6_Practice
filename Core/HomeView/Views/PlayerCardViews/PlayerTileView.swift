@@ -53,7 +53,7 @@ struct PlayerTileView: View {
                 VStack(spacing: 4) {
                     PlayerImageView(player: player)
                         .scaledToFit()
-                            .frame(minHeight: 80, maxHeight: 110) // some adaptability
+                            .frame(minHeight: 60, maxHeight: 90) // some adaptability
                             .padding(.top, -10)
                             // ADD THIS OVERLAY:
                             .overlay(
@@ -146,7 +146,7 @@ struct PlayerTileView: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color(white: 0.13))
+                .fill(Color(white: 0.08))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)

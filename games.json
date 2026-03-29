@@ -1,32 +1,47 @@
 [
     {
         "homeTeam": "MIL",
-        "awayTeam": "SAS",
-        "time": "3:00 pm ET"
+        "awayTeam": "LAC",
+        "time": "3:30 pm ET"
     },
     {
-        "homeTeam": "MIN",
-        "awayTeam": "DET",
-        "time": "5:30 pm ET"
+        "homeTeam": "IND",
+        "awayTeam": "MIA",
+        "time": "5:00 pm ET"
     },
     {
-        "homeTeam": "CHA",
-        "awayTeam": "PHI",
+        "homeTeam": "BKN",
+        "awayTeam": "SAC",
         "time": "6:00 pm ET"
     },
     {
-        "homeTeam": "ATL",
-        "awayTeam": "SAC",
+        "homeTeam": "CHA",
+        "awayTeam": "BOS",
+        "time": "6:00 pm ET"
+    },
+    {
+        "homeTeam": "TOR",
+        "awayTeam": "ORL",
+        "time": "6:00 pm ET"
+    },
+    {
+        "homeTeam": "POR",
+        "awayTeam": "WAS",
+        "time": "6:00 pm ET"
+    },
+    {
+        "homeTeam": "NOP",
+        "awayTeam": "HOU",
+        "time": "7:00 pm ET"
+    },
+    {
+        "homeTeam": "OKC",
+        "awayTeam": "NYK",
         "time": "7:30 pm ET"
     },
     {
-        "homeTeam": "MEM",
-        "awayTeam": "CHI",
-        "time": "8:00 pm ET"
-    },
-    {
-        "homeTeam": "PHX",
-        "awayTeam": "UTA",
+        "homeTeam": "DEN",
+        "awayTeam": "GSW",
         "time": "10:00 pm ET"
     }
 ]

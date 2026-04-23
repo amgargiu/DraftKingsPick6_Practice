@@ -1,17 +1,17 @@
 [
     {
-        "homeTeam": "BOS",
-        "awayTeam": "PHI",
+        "homeTeam": "PHI",
+        "awayTeam": "BOS",
         "time": "7:00 pm ET"
     },
     {
-        "homeTeam": "SAS",
-        "awayTeam": "POR",
+        "homeTeam": "HOU",
+        "awayTeam": "LAL",
         "time": "8:00 pm ET"
     },
     {
-        "homeTeam": "LAL",
-        "awayTeam": "HOU",
+        "homeTeam": "POR",
+        "awayTeam": "SAS",
         "time": "10:30 pm ET"
     }
 ]

@@ -1,22 +1,17 @@
 [
     {
-        "homeTeam": "PHI",
-        "awayTeam": "BOS",
+        "homeTeam": "ORL",
+        "awayTeam": "DET",
         "time": "TBD"
     },
     {
-        "homeTeam": "ATL",
-        "awayTeam": "NYK",
+        "homeTeam": "TOR",
+        "awayTeam": "CLE",
         "time": "TBD"
     },
     {
-        "homeTeam": "POR",
-        "awayTeam": "SAS",
-        "time": "TBD"
-    },
-    {
-        "homeTeam": "MIN",
-        "awayTeam": "DEN",
+        "homeTeam": "HOU",
+        "awayTeam": "LAL",
         "time": "TBD"
     }
 ]

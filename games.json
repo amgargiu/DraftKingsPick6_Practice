@@ -1,17 +1,12 @@
 [
     {
-        "homeTeam": "CLE",
-        "awayTeam": "TOR",
-        "time": "TBD"
+        "homeTeam": "NYK",
+        "awayTeam": "PHI",
+        "time": "8:00 pm ET"
     },
     {
-        "homeTeam": "DET",
-        "awayTeam": "ORL",
-        "time": "3:30 pm ET"
-    },
-    {
-        "homeTeam": "LAL",
-        "awayTeam": "HOU",
+        "homeTeam": "SAS",
+        "awayTeam": "MIN",
         "time": "9:30 pm ET"
     }
 ]

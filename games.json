@@ -1,12 +1,12 @@
 [
     {
-        "homeTeam": "DET",
-        "awayTeam": "CLE",
+        "homeTeam": "NYK",
+        "awayTeam": "PHI",
         "time": "7:00 pm ET"
     },
     {
-        "homeTeam": "OKC",
-        "awayTeam": "LAL",
-        "time": "8:30 pm ET"
+        "homeTeam": "SAS",
+        "awayTeam": "MIN",
+        "time": "9:30 pm ET"
     }
 ]

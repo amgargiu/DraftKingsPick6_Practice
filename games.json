@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "homeTeam": "CLE",
+        "awayTeam": "DET",
+        "time": "7:00 pm ET"
+    },
+    {
+        "homeTeam": "MIN",
+        "awayTeam": "SAS",
+        "time": "9:30 pm ET"
+    }
+]

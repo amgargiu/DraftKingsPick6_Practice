@@ -1,7 +1,12 @@
 [
     {
-        "homeTeam": "TOR",
-        "awayTeam": "MIA",
+        "homeTeam": "LAC",
+        "awayTeam": "GSW",
+        "time": "7:00 pm ET"
+    },
+    {
+        "homeTeam": "DEN",
+        "awayTeam": "UTA",
         "time": "7:00 pm ET"
     }
 ]

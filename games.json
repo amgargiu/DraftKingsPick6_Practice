@@ -1,12 +1,27 @@
 [
     {
-        "homeTeam": "LAC",
-        "awayTeam": "GSW",
+        "homeTeam": "ATL",
+        "awayTeam": "MEM",
         "time": "7:00 pm ET"
     },
     {
-        "homeTeam": "DEN",
-        "awayTeam": "UTA",
+        "homeTeam": "DET",
+        "awayTeam": "PHX",
         "time": "7:00 pm ET"
+    },
+    {
+        "homeTeam": "PHI",
+        "awayTeam": "NYK",
+        "time": "7:00 pm ET"
+    },
+    {
+        "homeTeam": "MIL",
+        "awayTeam": "MIN",
+        "time": "8:00 pm ET"
+    },
+    {
+        "homeTeam": "SAC",
+        "awayTeam": "LAL",
+        "time": "10:00 pm ET"
     }
 ]

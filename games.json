@@ -1,22 +1,27 @@
 [
     {
-        "homeTeam": "CHA",
-        "awayTeam": "BKN",
+        "homeTeam": "IND",
+        "awayTeam": "MIN",
         "time": "7:00 pm ET"
     },
     {
-        "homeTeam": "OKC",
-        "awayTeam": "NOP",
+        "homeTeam": "CHI",
+        "awayTeam": "PHX",
         "time": "8:00 pm ET"
     },
     {
-        "homeTeam": "UTA",
-        "awayTeam": "DEN",
-        "time": "9:00 pm ET"
+        "homeTeam": "MEM",
+        "awayTeam": "ORL",
+        "time": "8:00 pm ET"
     },
     {
-        "homeTeam": "GSW",
-        "awayTeam": "LAL",
+        "homeTeam": "OKC",
+        "awayTeam": "MIL",
+        "time": "8:00 pm ET"
+    },
+    {
+        "homeTeam": "POR",
+        "awayTeam": "GSW",
         "time": "10:00 pm ET"
     }
 ]

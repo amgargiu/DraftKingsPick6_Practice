@@ -1,1 +1,17 @@
-[]
+[
+    {
+        "homeTeam": "DET",
+        "awayTeam": "BOS",
+        "time": "3:00 pm ET"
+    },
+    {
+        "homeTeam": "NYK",
+        "awayTeam": "PHI",
+        "time": "7:00 pm ET"
+    },
+    {
+        "homeTeam": "SAS",
+        "awayTeam": "OKC",
+        "time": "9:30 pm ET"
+    }
+]
